@@ -10,7 +10,7 @@ RUN apt-get install -y --no-install-recommends apt-utils
 # Do a full update
 RUN apt-get upgrade -y
 # Install basic build and runtime requirements for Ruby 1.8
-RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git wget libpq-dev libreadline-dev
+RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git wget readline libreadline-dev
 
 # Install ruby-build
 RUN wget https://github.com/rbenv/ruby-build/archive/v20180601.tar.gz
@@ -40,7 +40,9 @@ RUN gem install json -v 1.8.3
 # Install rails
 RUN gem install rails -v 1.2.6
 
-# Need this specific postgres gem for Rails 1.2
+# Need this specific postgres gem for Rails 1.2.
+# Having postgresql-client (psql) installed is just useful, but it can be removed.
+RUN apt-get install -y libpq-dev postgresql-client
 RUN gem install postgres -v 0.7.9.2008.01.28
 
 # Activemerchant dependencies
@@ -59,6 +61,7 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 # Create a user to run the app as (put it last so it can be changed more easily)
 RUN groupadd -g 999 appuser && \
     useradd -r -u 999 -g appuser appuser
+
 USER appuser
 WORKDIR /home/appuser
 CMD ["bash"]

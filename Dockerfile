@@ -1,13 +1,22 @@
-FROM debian:7
+FROM debian:8
 MAINTAINER Tortus Tek Inc
 EXPOSE 3000
 WORKDIR /root
+USER root
 
-# Install build requirements
+# Create a user to run the app as
+RUN groupadd -g 999 appuser && \
+    useradd -r -u 999 -g appuser appuser
+
+# Install build and runtime requirements
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get autoremove -y
-RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git curl wget libpq-dev libreadline-dev imagemagick libmagickwand-dev
+RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git curl wget libpq-dev libreadline-dev
+
+# Set a time zone, since Rails 1.2 doesn't do UTC well
+ADD timezone /etc/
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Install ruby-build
 RUN wget https://github.com/rbenv/ruby-build/archive/v20180601.tar.gz
@@ -45,8 +54,10 @@ RUN gem install money -v 4.0.2
 RUN gem install httpclient -v 2.1.5
 RUN gem install soap4r -v 1.5.8
 
-# Image manipulation
-RUN gem install rmagick -v 2.14.0
+# Image manipulation gem used by many apps
+RUN apt-get install -y imagemagick libmagickwand-dev
+RUN gem install rmagick -v 2.15.4
 
-WORKDIR /root
-CMD bash
+USER appuser
+WORKDIR /home/appuser
+CMD ["bash"]

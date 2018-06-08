@@ -8,11 +8,12 @@ This Dockerfile will do it.
 ## Usage
 
 Runs as "appuser", so just mount your project at /home/appuser/project.
-Here is how to run script/server using this image:
+Here is how to run script/server using this image, given that you have a
+Rails 1.2.6 app named "myapp":
 
 ```bash
-cd myproject
-docker run -itv $PWD:/home/appuser/myproject ruby-1.8:rails-1.2 script/server
+cd myapp
+docker run -itv $PWD:/home/appuser/myapp ruby-1.8:rails-1.2 ./myapp/script/server
 ```
 
 ## Rails 2.3

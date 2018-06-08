@@ -7,7 +7,7 @@ WORKDIR /root
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get autoremove -y
-RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git curl wget libpq-dev libreadline-dev
+RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git curl wget libpq-dev libreadline-dev imagemagick libmagickwand-dev
 
 # Install ruby-build
 RUN wget https://github.com/rbenv/ruby-build/archive/v20180601.tar.gz
@@ -45,6 +45,8 @@ RUN gem install money -v 4.0.2
 RUN gem install httpclient -v 2.1.5
 RUN gem install soap4r -v 1.5.8
 
+# Image manipulation
+RUN gem install rmagick -v 2.14.0
 
 WORKDIR /root
 CMD bash

@@ -4,19 +4,13 @@ EXPOSE 3000
 WORKDIR /root
 USER root
 
-# Create a user to run the app as
-RUN groupadd -g 999 appuser && \
-    useradd -r -u 999 -g appuser appuser
-
-# Install build and runtime requirements
 RUN apt-get update
+# Fix a stupid warning
+RUN apt-get install -y --no-install-recommends apt-utils
+# Do a full update
 RUN apt-get upgrade -y
-RUN apt-get autoremove -y
-RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git curl wget libpq-dev libreadline-dev
-
-# Set a time zone, since Rails 1.2 doesn't do UTC well
-ADD timezone /etc/
-RUN dpkg-reconfigure -f noninteractive tzdata
+# Install basic build and runtime requirements for Ruby 1.8
+RUN apt-get install -y autoconf subversion bison build-essential libssl-dev git wget libpq-dev libreadline-dev
 
 # Install ruby-build
 RUN wget https://github.com/rbenv/ruby-build/archive/v20180601.tar.gz
@@ -58,6 +52,13 @@ RUN gem install soap4r -v 1.5.8
 RUN apt-get install -y imagemagick libmagickwand-dev
 RUN gem install rmagick -v 2.15.4
 
+# Set a time zone, since Rails 1.2 doesn't do UTC well
+ADD timezone /etc/
+RUN dpkg-reconfigure -f noninteractive tzdata
+
+# Create a user to run the app as (put it last so it can be changed more easily)
+RUN groupadd -g 999 appuser && \
+    useradd -r -u 999 -g appuser appuser
 USER appuser
 WORKDIR /home/appuser
 CMD ["bash"]

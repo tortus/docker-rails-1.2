@@ -28,6 +28,7 @@ RUN gem install i18n -v 0.6.11
 RUN gem install json -v 1.8.3
 RUN gem install rails -v 1.2.6
 RUN gem install money -v 4.0.2
+RUN gem install httpclient -v 2.1.5
 RUN gem install soap4r -v 1.5.8
 RUN gem install postgres -v 0.7.9.2008.01.28
 

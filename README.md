@@ -1,22 +1,18 @@
 # Ruby 1.8 / Rails 1.2.6 Docker Image
 
 It's really hard to run Rails 1.2 apps these days.
-This Dockerfile will do it.
+This Dockerfile will do it. Use as a base to construct a docker
+image for a Rails 1.2 app.
 
 **TODO:** Add nginx or Apache production server (must use Passenger 3.0.21)
 
-## Usage
+## Gems
 
-Runs as "appuser", so just mount your project at /home/appuser/project.
-Here is how to run script/server using this image, given that you have a
-Rails 1.2.6 app named "myapp":
+Comes with the following pre-installed:
 
-```bash
-cd myapp
-docker run -itv $PWD:/home/appuser/myapp ruby-1.8:rails-1.2 ./myapp/script/server
-```
+* rake 0.7.3
+* slimgems
+* i18n 0.6.11
+* json 1.8.3
 
-## Rails 2.3
-
-Can also be used as a basis for a Docker image for running Rails 2.3 apps,
-just install different gems, or use a bundler-based setup.
+Those specific versions of 18n and json are the latest that will work on Ruby 1.8, and are needed by most apps. Rake 0.7.3 is the latest version of rake that will work with Rails 1.2.

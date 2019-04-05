@@ -38,8 +38,7 @@ RUN apt-get -o Acquire::Check-Valid-Until=false update && \
     subversion \
     wget && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /usr/local/ruby-build
+  rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/opt/rubies/${RUBY_VERSION}/bin:${PATH}"
 

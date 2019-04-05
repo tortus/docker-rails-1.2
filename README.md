@@ -33,3 +33,9 @@ will work with Rails 1.2, and is required by slimgems.
 The following packages are added to the base image:
 
 * ca-certificates
+
+## Gems with C-Extensions
+
+The dependencies for these can be varied. Generally you will want to at least
+install `gcc` and `make`, but these have been omitted from the final image to
+save space in case they are not needed.

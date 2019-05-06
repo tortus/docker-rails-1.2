@@ -49,11 +49,11 @@ ENV PATH="/opt/rubies/${RUBY_VERSION}/bin:${PATH}"
 # - i18n 0.6.11 and json 1.8.3: latest versions that work with rails 1.2 and ruby 1.8
 RUN apt-get -o Acquire::Check-Valid-Until=false update && \
   apt-get install -y --no-install-recommends gcc make libc6-dev && \
-  gem install rake -v 0.7.3 && \
-  gem install slimgems && \
-  gem install i18n -v 0.6.11 && \
-  gem install json -v 1.8.3 && \
-  gem install rails -v 1.2.6 && \
+  gem install rake --no-ri --no-rdoc -v 0.7.3 && \
+  gem install slimgems --no-ri --no-rdoc && \
+  gem install i18n --no-ri --no-rdoc -v 0.6.11 && \
+  gem install json --no-ri --no-rdoc -v 1.8.3 && \
+  gem install rails --no-ri --no-rdoc -v 1.2.6 && \
   apt-get purge -y --auto-remove gcc make libc6-dev && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*

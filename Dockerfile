@@ -1,4 +1,4 @@
-FROM tortus/ruby-1.8
+FROM tortus/ruby-1.8:1.0.0
 
 RUN apt-get -o Acquire::Check-Valid-Until=false update && \
   apt-get install -y --no-install-recommends \
